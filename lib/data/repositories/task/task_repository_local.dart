@@ -6,7 +6,7 @@ class TaskRepositoryLocal implements TaskRepository
 {
   @override
   Future<Result<List<TaskSummary>>> getTaskSummaryList() {
-    // TODO: implement getTaskSummaryList
+
     throw UnimplementedError();
   }
 

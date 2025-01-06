@@ -3,4 +3,6 @@ import '../../../utils/result.dart';
 
 abstract class TaskRepository{
   Future<Result<List<TaskSummary>>> getTaskSummaryList();
+
+  Future<Result<void>> delete(int id);
 }

@@ -70,6 +70,7 @@ abstract class Command<T> extends ChangeNotifier {
   }
 }
 
+
 /// [Command] without arguments.
 /// Takes a [CommandAction0] as action.
 class Command0<T> extends Command<T> {

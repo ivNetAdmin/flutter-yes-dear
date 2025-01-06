@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 
 import '../../../data/repositories/task/task_repository.dart';
-import '../../../domain/models/task/task_summary.dart';
+import '../../../domain/models/task/task.dart';
 import '../../../utils/command.dart';
 import '../../../utils/result.dart';
 
@@ -23,18 +23,18 @@ class HomeViewModel extends ChangeNotifier {
   late Command0 load;
   late Command1<void, int> deleteTask;
 
-  List<TaskSummary> _tasks = [];
+  List<Task> _tasks = [];
 
-  List<TaskSummary> get tasks => _tasks;
+  List<Task> get tasks => _tasks;
 
   Future<Result> _load() async{
     try{
-      final result = await _taskRepository.getTaskSummaryList();
+      final result = await _taskRepository.getTaskList();
       switch (result) {
-        case Ok<List<TaskSummary>>():
+        case Ok<List<Task>>():
           _tasks = result.value;
           _log.fine('Loaded tasks');
-        case Error<List<TaskSummary>>():
+        case Error<List<Task>>():
           _log.warning('Failed to load tasks', result.error);
       }
       return result;
@@ -56,12 +56,12 @@ class HomeViewModel extends ChangeNotifier {
 
       // After deleting the booking, we need to reload the bookings list.
       // BookingRepository is the source of truth for bookings.
-      final resultLoadBookings = await _taskRepository.getTaskSummaryList();
+      final resultLoadBookings = await _taskRepository.getTaskList();
       switch (resultLoadBookings) {
-        case Ok<List<TaskSummary>>():
+        case Ok<List<Task>>():
           _tasks = resultLoadBookings.value;
           _log.fine('Loaded bookings');
-        case Error<List<TaskSummary>>():
+        case Error<List<Task>>():
           _log.warning('Failed to load bookings', resultLoadBookings.error);
           return resultLoadBookings;
       }

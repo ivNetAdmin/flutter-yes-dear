@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'task_summary.freezed.dart';
-part 'task_summary.g.dart';
+part 'task.freezed.dart';
+part 'task.g.dart';
 //f
 
 @freezed
-class TaskSummary with _$TaskSummary {
-  const factory TaskSummary({
+class Task with _$Task {
+  const factory Task({
     /// Optional ID of the task.
     /// May be null if the task is not yet stored.
     int? id,
@@ -18,9 +18,9 @@ class TaskSummary with _$TaskSummary {
      required String description,
 
 
-  }) = _TaskSummary;
+  }) = _Task;
 
-  factory TaskSummary.fromJson(Map<String, dynamic> json) =>
-      _$TaskSummaryFromJson(json);
+  factory Task.fromJson(Map<String, dynamic> json) =>
+      _$TaskFromJson(json);
 
 }

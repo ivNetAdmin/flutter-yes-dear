@@ -1,8 +1,8 @@
-import '../../../domain/models/task/task_summary.dart';
+import '../../../domain/models/task/task.dart';
 import '../../../utils/result.dart';
 
 abstract class TaskRepository{
-  Future<Result<List<TaskSummary>>> getTaskSummaryList();
+  Future<Result<List<Task>>> getTaskList();
 
   Future<Result<void>> delete(int id);
 }

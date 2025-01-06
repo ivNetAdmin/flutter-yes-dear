@@ -1,4 +1,4 @@
-import '../../../domain/models/task/task_summary.dart';
+import '../../../domain/models/task/task.dart';
 import '../../../utils/result.dart';
 import 'task_repository.dart';
 
@@ -7,10 +7,10 @@ class TaskRepositoryLocal implements TaskRepository {
   bool _isInitialized = false;
   int _sequentialId = 0;
 
-  final _tasks = List<TaskSummary>.empty(growable: true);
+  final _tasks = List<Task>.empty(growable: true);
 
   @override
-  Future<Result<List<TaskSummary>>> getTaskSummaryList() async {
+  Future<Result<List<Task>>> getTaskList() async {
     // Initialize the repository with a default booking
     if (!_isInitialized) {
       await _createDefaultTask();
@@ -19,11 +19,11 @@ class TaskRepositoryLocal implements TaskRepository {
     return Result.ok(_createSummaries());
   }
 
-  List<TaskSummary> _createSummaries() {
+  List<Task> _createSummaries() {
     return _tasks
         .map(
           (task) =>
-          TaskSummary(
+          Task(
               id: task.id!,
               description: task.description,
               createDate: task.createDate
@@ -34,7 +34,7 @@ class TaskRepositoryLocal implements TaskRepository {
   Future<void> _createDefaultTask() async {
     if (_tasks.isEmpty) {
       _tasks.add(
-        TaskSummary(
+        Task(
           id: _sequentialId++,
           description: 'My first task!',
           createDate: DateTime.now(), //  (2025, 1, 6),
@@ -42,7 +42,7 @@ class TaskRepositoryLocal implements TaskRepository {
       );
 
       _tasks.add(
-        TaskSummary(
+        Task(
           id: _sequentialId++,
           description: 'My next task!',
           createDate: DateTime.now(), //  (2025, 1, 6),

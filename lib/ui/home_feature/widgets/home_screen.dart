@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../domain/models/task/task_summary.dart';
+import '../../../domain/models/task/task.dart';
+import '../../core/localisation/applocalisation.dart';
 import '../../core/themes/colours.dart';
 import '../../core/themes/dimens.dart';
 import '../../core/ui/app_bar_widget.dart';
 import '../../core/ui/bottom_navigation_bar_widget.dart';
+import '../../core/ui/error_indicator.dart';
 import '../view_model/home_viewmodel.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,8 +21,21 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListenableBuilder(
-            listenable: viewModel,
+            listenable: viewModel.load,
             builder: (context, _) {
+
+              if (viewModel.load.running) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (viewModel.load.error) {
+                return ErrorIndicator(
+                  title: AppLocalization.of(context).errorWhileLoadingHome,
+                  label: AppLocalization.of(context).tryAgain,
+                  onPressed: viewModel.load.execute,
+                );
+              }
+
               return CustomScrollView(
                 slivers: [
                   SliverToBoxAdapter(
@@ -40,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                   SliverList.builder(
                     itemCount: viewModel.tasks.length,
                     itemBuilder: (_, index) =>
-                        _TaskSummary(
+                        _Task(
                             key: ValueKey(viewModel.tasks[index].id),
                             task: viewModel.tasks[index],
                           confirmDismiss: (_) async {
@@ -76,14 +91,14 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _TaskSummary extends StatelessWidget {
-  const _TaskSummary({
+class _Task extends StatelessWidget {
+  const _Task({
     super.key,
     required this.task,
     required this.confirmDismiss,
   });
 
-  final TaskSummary task;
+  final Task task;
   final ConfirmDismissCallback confirmDismiss;
 
   @override

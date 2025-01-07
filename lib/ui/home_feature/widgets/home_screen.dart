@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../domain/models/task/task.dart';
+import '../../../routing/routes.dart';
 import '../../core/localisation/applocalisation.dart';
 import '../../core/themes/colours.dart';
 import '../../core/themes/dimens.dart';
-import '../../core/ui/app_bar_widget.dart';
-import '../../core/ui/bottom_navigation_bar_widget.dart';
 import '../../core/ui/error_indicator.dart';
 import '../view_model/home_viewmodel.dart';
 
@@ -19,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar( title: const Text('Yes Dear'),),
       body: SafeArea(
         child: ListenableBuilder(
             listenable: viewModel.load,
@@ -49,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                             .paddingScreenHorizontal,
                       ),
                       child: Text(
-                          'Yes Dear!'), //HomeHeader(viewModel: widget.viewModel),
+                          'Tasks'), //HomeHeader(viewModel: widget.viewModel),
                     ),
                   ),
                   SliverList.builder(
@@ -78,6 +78,11 @@ class HomeScreen extends StatelessWidget {
               );
             }
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.go(Routes.task),
+        tooltip: 'Add new task',
+        child: const Icon(Icons.add),
       ),
     );
   }

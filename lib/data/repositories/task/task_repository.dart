@@ -4,5 +4,5 @@ import '../../../utils/result.dart';
 abstract class TaskRepository{
   Future<Result<List<Task>>> getTaskList();
 
-  Future<Result<void>> delete(int id);
+  Future<Result<void>> deleteTask(int id);
 }

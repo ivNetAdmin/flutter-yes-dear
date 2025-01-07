@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
 
@@ -45,7 +43,7 @@ class HomeViewModel extends ChangeNotifier {
 
   Future<Result<void>> _deleteTask(int id) async {
     try {
-      final resultDelete = await _taskRepository.delete(id);
+      final resultDelete = await _taskRepository.deleteTask(id);
       switch (resultDelete) {
         case Ok<void>():
           _log.fine('Deleted task $id');
